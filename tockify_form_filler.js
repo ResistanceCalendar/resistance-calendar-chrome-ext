@@ -2,6 +2,9 @@ console.log(event)
 
 title = '';
 
+document.querySelector("input[ng-model='submitter.name']").value = FIELD_NAME_VALUE
+document.querySelector("input[ng-model='submitter.email']").value = FIELD_EMAIL_VALUE
+
 if (event.start_time) {
   var start = new Date(event.start_time)
   var startDate = (1+start.getMonth()) + '-' + start.getDate() + '-' + start.getFullYear().toString().substring(2);

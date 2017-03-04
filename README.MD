@@ -13,6 +13,8 @@ Create a file named 'env.js'
 ```
 const TOCKIFY_URL    = 'YOUR URL'
 const FACEBOOK_TOKEN = 'YOUR KEY'
+const FIELD_NAME_VALUE = 'YOUR NAME'
+const FIELD_EMAIL_VALUE = 'YOUR EMAIL'
 ```
 
 Read and follow the 'Testing it out' section of [How to Create a Chrome Extension in 10 Minutes Flat](https://www.sitepoint.com/create-chrome-extension-10-minutes-flat/)

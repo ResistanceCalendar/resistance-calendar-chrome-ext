@@ -38,13 +38,15 @@ function onWindowLoad() {;
               message.innerText = 'loading data...'
               setTimeout(function() {
                 chrome.tabs.executeScript(tabId, {code: 'var event = ' + xmlHttp.responseText}, function() {
-                  chrome.tabs.executeScript(tabId, {file: 'tockify_form_filler.js'}, function() {
-                    // If you try and inject into an extensions page or the webstore/NTP you'll get an error
-                    if (chrome.runtime.lastError) {
-                      message.innerText = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
-                    } else {
-                      message.innerText = 'done!'
-                    }
+                  chrome.tabs.executeScript(tabId, {file: 'env.js'}, function() {
+                    chrome.tabs.executeScript(tabId, {file: 'tockify_form_filler.js'}, function() {
+                      // If you try and inject into an extensions page or the webstore/NTP you'll get an error
+                      if (chrome.runtime.lastError) {
+                        message.innerText = 'There was an error injecting script : \n' + chrome.runtime.lastError.message;
+                      } else {
+                        message.innerText = 'done!'
+                      }
+                    });
                   });
                 });
               }, 2000);
