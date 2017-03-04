@@ -36,12 +36,20 @@ if (event.place && event.place.location) {
                 event.place.location.zip    + ' ' +
                 event.place.location.country;
   document.querySelector("input[ng-model='where.address']").value = address;
+
+  document.querySelector("input[ng-model='where.address']").value = address;
   title += ' - ' + event.place.location.city + ', ' + event.place.location.state;
 }
 
 document.querySelector("input[ng-model='event.what.summary']").value = title
-document.querySelector("input[ng-model='where.address']").value = address;
-document.querySelector("input[ng-model='where.place']").value = event.place.name;
 
-window.frames[0].document.body.innerHTML = event.description.replace(/\n/g, '<br>');
+if (event.place) {
+  document.querySelector("input[ng-model='where.place']").value = event.place.name;
+}
+
+if (event.description) {
+  window.frames[0].document.body.innerHTML = event.description.replace(/\n/g, '<br>');
+} else {
+  window.frames[0].document.body.innerHTML = ''
+}
 window.frames[0].document.body.innerHTML += '<br><br>FACEBOOK LINK: https://www.facebook.com/' + event.id;
