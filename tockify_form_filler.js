@@ -1,8 +1,6 @@
 console.log(event)
 
-document.querySelector("input[ng-model='event.what.summary']").value = event.name;
-document.querySelector("input[ng-model='where.place']").value = event.place.name;
-window.frames[0].document.body.innerHTML = event.description.replace(/\n/g, '<br>');
+title = '';
 
 if (event.start_time) {
   var start = new Date(event.start_time)
@@ -10,6 +8,9 @@ if (event.start_time) {
   var startTime = start.getUTCHours() + ':' + start.getUTCHours() + ' ' + (start.getUTCHours < 12 ? 'am' : 'pm')
   document.querySelector("input[ng-model='textWhen.start.date']").value = startDate
   document.querySelector("div[ng-model='textWhen.start.time']").value = startTime;
+
+  const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+  title += months[start.getMonth()] + ' ' + start.getDate() + ': '
 }
 
 // TODO: allday?
@@ -27,6 +28,7 @@ if (end) {
   document.querySelector("div[ng-model='textWhen.end.time']").value = endTime;
 }
 
+title += event.name;
 if (event.place && event.place.location) {
   var address = event.place.location.street + ' ' +
                 event.place.location.city   + ', ' +
@@ -34,4 +36,12 @@ if (event.place && event.place.location) {
                 event.place.location.zip    + ' ' +
                 event.place.location.country;
   document.querySelector("input[ng-model='where.address']").value = address;
+  title += ' - ' + event.place.location.city + ', ' + event.place.location.state;
 }
+
+document.querySelector("input[ng-model='event.what.summary']").value = title
+document.querySelector("input[ng-model='where.address']").value = address;
+document.querySelector("input[ng-model='where.place']").value = event.place.name;
+
+window.frames[0].document.body.innerHTML = event.description.replace(/\n/g, '<br>');
+window.frames[0].document.body.innerHTML += '<br><br>FACEBOOK LINK: https://www.facebook.com/';
