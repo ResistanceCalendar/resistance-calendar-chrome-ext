@@ -4,13 +4,18 @@ This is a chrome extension to auto import a facebook event into the resistance c
 
 # Installation
 
-1. Clone this git repository
-2. Create a file named 'env.js'
+Clone this git repository
+```
+git clone https://github.com/ResistanceCalendar/resistance-calendar-chrome-ext.git
+```
+
+Create a file named 'env.js'
 ```
 const TOCKIFY_URL    = 'YOUR URL'
 const FACEBOOK_TOKEN = 'YOUR KEY'
 ```
-3. Read and follow the 'Testing it out' section of [How to Create a Chrome Extension in 10 Minutes Flat](https://www.sitepoint.com/create-chrome-extension-10-minutes-flat/)
+
+Read and follow the 'Testing it out' section of [How to Create a Chrome Extension in 10 Minutes Flat](https://www.sitepoint.com/create-chrome-extension-10-minutes-flat/)
 
 # Operation
 
