@@ -10,7 +10,7 @@ This is a chrome extension to auto import a facebook event into the resistance c
 const TOCKIFY_URL    = 'YOUR URL'
 const FACEBOOK_TOKEN = 'YOUR KEY'
 ```
-3. Read the 'Testing it out' section of [How to Create a Chrome Extension in 10 Minutes Flat](https://www.sitepoint.com/create-chrome-extension-10-minutes-flat/)
+3. Read and follow the 'Testing it out' section of [How to Create a Chrome Extension in 10 Minutes Flat](https://www.sitepoint.com/create-chrome-extension-10-minutes-flat/)
 
 # Operation
 
