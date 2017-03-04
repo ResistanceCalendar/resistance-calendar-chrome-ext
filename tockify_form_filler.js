@@ -44,4 +44,4 @@ document.querySelector("input[ng-model='where.address']").value = address;
 document.querySelector("input[ng-model='where.place']").value = event.place.name;
 
 window.frames[0].document.body.innerHTML = event.description.replace(/\n/g, '<br>');
-window.frames[0].document.body.innerHTML += '<br><br>FACEBOOK LINK: https://www.facebook.com/';
+window.frames[0].document.body.innerHTML += '<br><br>FACEBOOK LINK: https://www.facebook.com/' + event.id;
