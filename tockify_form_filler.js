@@ -53,9 +53,8 @@ function getTitle(event) {
   return title;
 }
 
-// TODO: allday?
 var start = event.start_time;
-var end = event.end_time ? event.end_time : start;
+var end = event.end_time ? event.end_time : start; // TODO: allday?
 
 document.querySelector("input[ng-model='textWhen.start.date']").value = getDateString(start);
 document.querySelector("div[ng-model='textWhen.start.time']").value = getTimeString(start);
