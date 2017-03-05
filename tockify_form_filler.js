@@ -1,60 +1,69 @@
 console.log(event)
 
-title = '';
+function getDescription(event) {
+  var description = '';
+  if (event.description) {
+    description = event.description.replace(/\n/g, '<br>');
+  }
+  const facebookLink = 'https://www.facebook.com/' + event.id
+  return description + '<br><br><a href="' + facebookLink + '">FACEBOOK LINK</a>';
+}
 
-document.querySelector("input[ng-model='submitter.name']").value = FIELD_NAME_VALUE
-document.querySelector("input[ng-model='submitter.email']").value = FIELD_EMAIL_VALUE
+function getDateString(date) {
+  if (date) {
+    var d = new Date(date);
+    return (1+d.getMonth()) + '-' + d.getDate() + '-' + d.getFullYear().toString().substring(2);
+  }
+}
 
-if (event.start_time) {
-  var start = new Date(event.start_time)
-  var startDate = (1+start.getMonth()) + '-' + start.getDate() + '-' + start.getFullYear().toString().substring(2);
-  var startTime = start.getUTCHours() + ':' + start.getUTCHours() + ' ' + (start.getUTCHours < 12 ? 'am' : 'pm')
-  document.querySelector("input[ng-model='textWhen.start.date']").value = startDate
-  document.querySelector("div[ng-model='textWhen.start.time']").value = startTime;
+function getTimeString(date) {
+  if (date) {
+    var d = new Date(date);
+    return d.getUTCHours() + ':' + d.getUTCHours() + ' ' + (d.getUTCHours < 12 ? 'am' : 'pm');
+  }
+}
 
-  const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
-  title += months[start.getMonth()] + ' ' + start.getDate() + ': '
+function getAddress(event) {
+  if (event.place && event.place.location) {
+    return event.place.location.street + ' ' +
+            event.place.location.city   + ', ' +
+            event.place.location.state  + ' ' +
+            event.place.location.zip    + ' ' +
+            event.place.location.country;
+  }
+}
+
+function getPlaceName(event) {
+  if (event.place) {
+    return event.place.name;
+  }
+}
+
+function getTitle(event) {
+  title = '';
+  if (event.start_time) {
+    var start = new Date(event.start_time);
+    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+    title += months[start.getMonth()] + ' ' + start.getDate() + ': '
+  }
+  title += event.name;
+  if (event.place && event.place.location) {
+    title += ' - ' + event.place.location.city + ', ' + event.place.location.state;
+  }
+  return title;
 }
 
 // TODO: allday?
-var end = undefined;
-if (event.end_time) {
-  end = new Date(event.end_time)
-} else if (event.start_time) {
-  end = new Date(event.start_time)
-}
+var start = event.start_time;
+var end = event.end_time ? event.end_time : start;
 
-if (end) {
-  var endDate = (1+end.getMonth()) + '-' + end.getDate() + '-' + end.getFullYear().toString().substring(2);
-  var endTime = end.getUTCHours() + ':' + end.getUTCHours() + ' ' + (end.getUTCHours < 12 ? 'am' : 'pm')
-  document.querySelector("input[ng-model='textWhen.end.date']").value = endDate;
-  document.querySelector("div[ng-model='textWhen.end.time']").value = endTime;
-}
-
-title += event.name;
-if (event.place && event.place.location) {
-  var address = event.place.location.street + ' ' +
-                event.place.location.city   + ', ' +
-                event.place.location.state  + ' ' +
-                event.place.location.zip    + ' ' +
-                event.place.location.country;
-  document.querySelector("input[ng-model='where.address']").value = address;
-
-  document.querySelector("input[ng-model='where.address']").value = address;
-  title += ' - ' + event.place.location.city + ', ' + event.place.location.state;
-}
-
-document.querySelector("input[ng-model='event.what.summary']").value = title
-
-if (event.place) {
-  document.querySelector("input[ng-model='where.place']").value = event.place.name;
-}
-
-if (event.description) {
-  window.frames[0].document.body.innerHTML = event.description.replace(/\n/g, '<br>');
-} else {
-  window.frames[0].document.body.innerHTML = ''
-}
-
-const facebookLink = 'https://www.facebook.com/' + event.id
-window.frames[0].document.body.innerHTML += '<br><br><a href="' + facebookLink + '">FACEBOOK LINK</a>';
+document.querySelector("input[ng-model='textWhen.start.date']").value = getDateString(start);
+document.querySelector("div[ng-model='textWhen.start.time']").value = getTimeString(start);
+document.querySelector("input[ng-model='textWhen.end.date']").value = getDateString(end);
+document.querySelector("div[ng-model='textWhen.end.time']").value = getTimeString(end);
+document.querySelector("input[ng-model='event.what.summary']").value = getTitle(event);
+document.querySelector("input[ng-model='where.place']").value = getPlaceName(event);
+document.querySelector("input[ng-model='where.address']").value = getAddress(event);
+document.querySelector("input[ng-model='submitter.name']").value = FIELD_NAME_VALUE
+document.querySelector("input[ng-model='submitter.email']").value = FIELD_EMAIL_VALUE
+window.frames[0].document.body.innerHTML = getDescription(event);
