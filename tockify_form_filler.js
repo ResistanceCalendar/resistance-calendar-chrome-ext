@@ -55,4 +55,6 @@ if (event.description) {
 } else {
   window.frames[0].document.body.innerHTML = ''
 }
-window.frames[0].document.body.innerHTML += '<br><br>FACEBOOK LINK: https://www.facebook.com/' + event.id;
+
+const facebookLink = 'https://www.facebook.com/' + event.id
+window.frames[0].document.body.innerHTML += '<br><br><a href="' + facebookLink + '">FACEBOOK LINK</a>';
