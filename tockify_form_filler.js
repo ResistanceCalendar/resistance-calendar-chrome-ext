@@ -1,5 +1,3 @@
-console.log(event)
-
 function getDescription(event) {
   var description = '';
   if (event.description) {
@@ -17,15 +15,18 @@ function getDateString(date) {
   if (date) {
     var d = new Date(date);
     const months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
-
-    return padDigits(1 + d.getMonth(), 2) + '-' + padDigits(d.getDate(), 2) + '-' + d.getFullYear().toString().substring(2);
+    return padDigits(1 + d.getMonth(), 2) + '-' +
+            padDigits(d.getDate(), 2) + '-' +
+            d.getFullYear().toString().substring(2);
   }
 }
 
 function getTimeString(date) {
   if (date) {
     var d = new Date(date);
-    return d.getUTCHours() + ':' + d.getUTCHours() + ' ' + (d.getUTCHours < 12 ? 'am' : 'pm');
+    return padDigits(d.getUTCHours(), 2) + ':' +
+            padDigits(d.getUTCMinutes(), 2) + ' ' +
+            (d.getUTCHours < 12 ? 'am' : 'pm');
   }
 }
 
@@ -70,14 +71,12 @@ var start = event.start_time;
 var end = event.end_time ? event.end_time : start; // TODO: allday?
 
 setValue("input[ng-model='textWhen.start.date']", getDateString(start));
-setValue("div[ng-model='textWhen.start.time']", getTimeString(start));
+setValue("div[ng-model='textWhen.start.time'] div input", getTimeString(start));
 setValue("input[ng-model='textWhen.end.date']", getDateString(end));
-setValue("div[ng-model='textWhen.end.time']", getTimeString(end));
+setValue("div[ng-model='textWhen.end.time'] div input", getTimeString(end));
 setValue("input[ng-model='event.what.summary']", getTitle(event));
 setValue("input[ng-model='where.place']", getPlaceName(event));
 setValue("input[ng-model='where.address']", getAddress(event));
 setValue("input[ng-model='submitter.name']", FIELD_NAME_VALUE)
 setValue("input[ng-model='submitter.email']", FIELD_EMAIL_VALUE);
 window.frames[0].document.body.innerHTML = getDescription(event);
-window.frames[0].document.dispatchEvent(new Event('change'));
-window.frames[0].document.body.dispatchEvent(new Event('change'));
